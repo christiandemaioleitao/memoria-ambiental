@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Memória Ambiental</string>
+    <string name="recording_channel">Gravação</string>
+    <string name="notification_recording">Captura de áudio em blocos em andamento</string>
+</resources>
