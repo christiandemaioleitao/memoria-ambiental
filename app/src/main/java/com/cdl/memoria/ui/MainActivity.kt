@@ -97,8 +97,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadSettings() {
-        timeStart.text = fmt(settings.windowStartMinutes)
-        timeEnd.text = fmt(settings.windowEndMinutes)
+        timeStart.setText(fmt(settings.windowStartMinutes))
+        timeEnd.setText(fmt(settings.windowEndMinutes))
         spTranscription.setSelection(if (settings.transcriptionProvider == "openai") 1 else 0)
         spAnalysis.setSelection(if (settings.analysisProvider == "openai") 1 else 0)
         etTranscriptionKey.setText(settings.transcriptionApiKey)
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         TimePickerDialog(this, { _, h, m ->
             val minutes = h * 60 + m
             if (isStart) settings.windowStartMinutes = minutes else settings.windowEndMinutes = minutes
-            (if (isStart) timeStart else timeEnd).text = fmt(minutes)
+            (if (isStart) timeStart else timeEnd).setText(fmt(minutes))
         }, current / 60, current % 60, true).show()
     }
 
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         val verifier = OAuthHelper.generateCodeVerifier()
-        settings.setCodeVerifier(verifier)
+        settings.codeVerifier = verifier
         val url = OAuthHelper.buildAuthUrl(
             settings.googleClientId, OAuthHelper.codeChallenge(verifier)
         )
@@ -162,7 +162,10 @@ class MainActivity : AppCompatActivity() {
             text = hint
             setPadding(0, dp(16), 0, dp(4))
         }
-        val edit = EditText(this).apply { hint = hint; setSingleLine(true) }
+        val edit = EditText(this).apply {
+            this.hint = hint
+            setSingleLine(true)
+        }
         root.addView(label)
         root.addView(edit)
         return edit
